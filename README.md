@@ -1,4 +1,4 @@
-# jbuli
+# Fußball Bundesliga Module für Joomla
 Fußball Ergebnisse, Tabellen und Spielpläne für Joomla
 
 http://www.jbuli.de/
