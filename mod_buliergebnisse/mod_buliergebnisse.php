@@ -2,9 +2,9 @@
 /**
  * mod_buliergebnisse.php - (c) Markus Krupp
  * Die Daten werden vom Webservice openligadb.de bereitgestellt
- * 
+ *
  * Historie:
- * 
+ *
  * 1.00 - Erste Veröffentlichung
  * 1.01 - Installations Script ausgelagert und auf Joomla 3 migriert
  * 1.02 - Saison 2014 und Liga 2
@@ -32,20 +32,18 @@
  */
   
 	// no direct access
-	defined( '_JEXEC' ) or die( 'Restricted access' );
-	header('Content-Type: text/html; charset=utf-8'); 
+	defined('_JEXEC') or die('Restricted access');
+	header('Content-Type: text/html; charset=utf-8');
 
 	require_once 'helper.php';
 
-	try{
-		$ergebnisse = New modBuliergebnisseHelper($module);
-		$strHTMLOutput = "\r\n<!-- Bundesliga-Ergebnisse 1.20 - (c) Markus Krupp - http://www.jbuli.de-->\r\n";
-		$strHTMLOutput .= "<div id='spielplan_" . $module->id . "'> <img id='buliergebnisse_loading_" . $module->id . "' src='".JURI::root()."modules/mod_buliergebnisse/images/ajax-loader.gif'></div>\r\n";
-	}
-	catch (Exception $e) {
-		//echo $e->getMessage();
-		echo '<div align="left">'.$params->get('timeout_error').'</div>';
+	try {
+	  $ergebnisse = new modBuliergebnisseHelper($module);
+	  $strHTMLOutput = "\r\n<!-- Bundesliga-Ergebnisse 1.20 - (c) Markus Krupp - http://www.jbuli.de-->\r\n";
+	  $strHTMLOutput .= "<div id='spielplan_" . $module->id . "'> <img id='buliergebnisse_loading_" . $module->id . "' src='".JURI::root()."modules/mod_buliergebnisse/images/ajax-loader.gif'></div>\r\n";
+	} catch (Exception $e) {
+	  //echo $e->getMessage();
+	  echo '<div align="left">'.$params->get('timeout_error').'</div>';
 	}
 
-	require( JModuleHelper::getLayoutPath( 'mod_buliergebnisse' ) );
-?>
+	require JModuleHelper::getLayoutPath('mod_buliergebnisse');

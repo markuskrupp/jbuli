@@ -7,8 +7,9 @@ class mod_buliergebnisseInstallerScript
    *
    * @param   JAdapterInstance  $adapter  The object responsible for running this script
    */
-  public function __construct(JAdapterInstance $adapter) {}
-  
+  public function __construct(JAdapterInstance $adapter)
+  {
+  }
   
   /**
    * Called before any type of action
@@ -18,8 +19,9 @@ class mod_buliergebnisseInstallerScript
    *
    * @return  boolean  True on success
    */
-  public function preflight($route, JAdapterInstance $adapter) {}
-  
+  public function preflight($route, JAdapterInstance $adapter)
+  {
+  }
   
   /**
    * Called after any type of action
@@ -29,8 +31,9 @@ class mod_buliergebnisseInstallerScript
    *
    * @return  boolean  True on success
    */
-  public function postflight($route, JAdapterInstance $adapter) {}
-  
+  public function postflight($route, JAdapterInstance $adapter)
+  {
+  }
   
   /**
    * Called on installation
@@ -233,17 +236,14 @@ class mod_buliergebnisseInstallerScript
 			    (149, 'VfL Osnabrück', 'OSN', 'Osnabrück', 'osnabrueck.png'),
 			    (150, 'SV Wehen Wiesbaden', 'WIS', 'Wiesbaden', 'wiesbaden.png'),
 			    (151, 'Karlsruher SC', 'KSC', 'Karlsruhe', 'karlsruhe.png');
-			   "; 
+			   ";
   
     $db->setQuery($query);
     $db->query();
 	
-	$cachefile = JPATH_BASE."/../modules/mod_buliergebnisse/cache.txt";
-	if ( is_readable($cachefile) ) {
-	  unlink($cachefile);
-	}
-	
+    $cachefile = JPATH_BASE."/../modules/mod_buliergebnisse/cache.txt";
+    if (is_readable($cachefile)) {
+      unlink($cachefile);
+    }
   }
 }
-
-?>

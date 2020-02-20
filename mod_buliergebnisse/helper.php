@@ -4,17 +4,17 @@
  * Die Daten werden vom Webservice openligadb bereitgestellt
  */
  
-class modBuliergebnisseHelper {
-
+class modBuliergebnisseHelper
+{
   /**
    * Constructor
    */
   public function __construct($module)
   {
     // Load Bootstrap and JQuery
-	  JHtml::_('bootstrap.framework');
+    JHtml::_('bootstrap.framework');
     
-	  $app = JFactory::getApplication();
+    $app = JFactory::getApplication();
     $document = JFactory::getDocument();
 	
     $document->addScriptDeclaration('
@@ -61,9 +61,8 @@ class modBuliergebnisseHelper {
           }
        });
       };
-    ');    
+    ');
   }
-  
   
   /**
    * fetch data from api using curl or file_get_contents
@@ -77,17 +76,18 @@ class modBuliergebnisseHelper {
       curl_setopt($curl, CURLOPT_TIMEOUT, $timeout);
       $content = curl_exec($curl);
       curl_close($curl);
+
       return $content;
-    } else if (ini_get('allow_url_fopen')) {
-      $context = stream_context_create(array( 
-  		  'http' => array( 'timeout' => $timeout )
-  	  ));
+    } elseif (ini_get('allow_url_fopen')) {
+      $context = stream_context_create([
+        'http' => [ 'timeout' => $timeout ]
+      ]);
+
       return file_get_contents($url, 0, $context);
     } else {
       return false;
     }
   }
- 
  
   /**
    * AJAX Endpoint
@@ -95,14 +95,14 @@ class modBuliergebnisseHelper {
   public static function getErgebnisseAjax()
   {
     $jinput = JFactory::getApplication()->input;
-  	$module = JModuleHelper::getModule('buliergebnisse',$jinput->get('titel', 'default_value', 'filter'));
-  	$db = JFactory::getDbo();
+    $module = JModuleHelper::getModule('buliergebnisse', $jinput->get('titel', 'default_value', 'filter'));
+    $db = JFactory::getDbo();
   	
-    $jparams = new JRegistry;
+    $jparams = new JRegistry();
     $jparams->loadString($module->params);
     
-    $tage = array('So.','Mo.','Di.','Mi.','Do.','Fr.','Sa.');
-    $clrunden = array('', 'Gruppe A', 'Gruppe B', 'Gruppe C', 'Gruppe D', 'Gruppe E', 'Gruppe F', 'Gruppe G', 'Gruppe H', 'Achtelfinale', 'Viertelfinale', 'Halbfinale', 'Finale');
+    $tage = ['So.', 'Mo.', 'Di.', 'Mi.', 'Do.', 'Fr.', 'Sa.'];
+    $clrunden = ['', 'Gruppe A', 'Gruppe B', 'Gruppe C', 'Gruppe D', 'Gruppe E', 'Gruppe F', 'Gruppe G', 'Gruppe H', 'Achtelfinale', 'Viertelfinale', 'Halbfinale', 'Finale'];
   
     // Teams aus der Joomla Tabelle holen
     $query = 'SELECT '.$db->quoteName('bezeichnung_webservice').', '.$db->quoteName('bezeichnung_kurz').', '.$db->quoteName('bezeichnung_mittel').', '.$db->quoteName('dateiname_logo').' FROM '.$db->quoteName('#__buliergebnisse');
@@ -112,145 +112,145 @@ class modBuliergebnisseHelper {
     
     // Spieltag ermitteln
     if ($jinput->get('spieltag', 'default_value', 'filter') != '') {
-  	  $spieltag = $jinput->get('spieltag', 'default_value', 'filter');
-  	  if (! is_numeric($spieltag)) {
-  	    $spieltag = array_search($spieltag, $clrunden);
-  	  }
+      $spieltag = $jinput->get('spieltag', 'default_value', 'filter');
+      if (! is_numeric($spieltag)) {
+        $spieltag = array_search($spieltag, $clrunden);
+      }
     } elseif ($jparams->get('matchday') != 0 && $jparams->get('matchday') != -1) {
-  	  $spieltag = $jparams->get('matchday');
+      $spieltag = $jparams->get('matchday');
     } else {
-  	  $spieltag = self::fetchdata('https://www.openligadb.de/api/getcurrentgroup/' .$liga, $jparams->get('timeout'));
+      $spieltag = self::fetchdata('https://www.openligadb.de/api/getcurrentgroup/' .$liga, $jparams->get('timeout'));
   	
-  	  if ($spieltag === FALSE) {
-  		  // Kein Spieltag vom Webservice -> den vom letzten Mal nehmen
-  		  if ($jparams->get('lastCurrentMatchday') != '') {
-  		    $spieltag = $jparams->get('lastCurrentMatchday');
-  		  } else {
-  			  $spieltag = 1;
-  		  }
-  		} else {
-  		  $spieltag = json_decode($spieltag);
-		  $spieltagsname = $spieltag->GroupName;
-  		  $spieltag = $spieltag->GroupOrderID;
+      if ($spieltag === false) {
+        // Kein Spieltag vom Webservice -> den vom letzten Mal nehmen
+        if ($jparams->get('lastCurrentMatchday') != '') {
+          $spieltag = $jparams->get('lastCurrentMatchday');
+        } else {
+          $spieltag = 1;
+        }
+      } else {
+        $spieltag = json_decode($spieltag);
+        $spieltagsname = $spieltag->GroupName;
+        $spieltag = $spieltag->GroupOrderID;
 		  
-		  if ($liga == 'cl1617') {
-			$spieltag = array_search($spieltagsname, $clrunden);
-			if (! $spieltag || $spieltag < 9) {
-				$spieltag = 1;
-			}
-		  }
+        if ($liga == 'cl1617') {
+          $spieltag = array_search($spieltagsname, $clrunden);
+          if (! $spieltag || $spieltag < 9) {
+            $spieltag = 1;
+          }
+        }
   		  
-  		  // Aktueller Spieltag hat sich geändert -> Als Parameter lastCurrentMatchday speichern
-  		  if ($jparams->get('lastCurrentMatchday') != $spieltag) {
-  			  $jparams->set('lastCurrentMatchday', $spieltag); 
-  			  $module->params = $jparams->toString();			
-  			  $dbtable = JTable::getInstance('module'); 
-  			  $dbtable->save((array)$module);
-  		  }
-  		}
+        // Aktueller Spieltag hat sich geändert -> Als Parameter lastCurrentMatchday speichern
+        if ($jparams->get('lastCurrentMatchday') != $spieltag) {
+          $jparams->set('lastCurrentMatchday', $spieltag);
+          $module->params = $jparams->toString();
+          $dbtable = JTable::getInstance('module');
+          $dbtable->save((array)$module);
+        }
+      }
     }
   
     // Wenn -1 eingestellt dann vorherigen Spieltag anzeigen
     if ($jparams->get('matchday') == '-1' && $spieltag > 1) {
-  	  $spieltag -= 1;
+      $spieltag -= 1;
     }
   
     $saison = $jparams->get('season');
 	
     // Cache lesen
     $cachefile = JPATH_BASE."/modules/mod_buliergebnisse/cache.txt";
-    if ( is_readable($cachefile) ) {
-  	  $cache = file_get_contents($cachefile);
+    if (is_readable($cachefile)) {
+      $cache = file_get_contents($cachefile);
     } else {
-  	  $cache = self::fetchdata('http://www.jbuli.de/modules/mod_buliergebnisse/cache.txt', 10);
+      $cache = self::fetchdata('http://www.jbuli.de/modules/mod_buliergebnisse/cache.txt', 10);
   	
-  	  if ($cache != FALSE) {
-  		  file_put_contents($cachefile, $cache);
-  	  }
+      if ($cache != false) {
+        file_put_contents($cachefile, $cache);
+      }
     }
     $paarungen_cache = unserialize($cache);
   
     // Letzte Änderung ermitteln
     $lastchange = self::fetchdata('https://www.openligadb.de/api/getlastchangedate/' . $liga . '/' . $saison . '/' . $spieltag, $jparams->get('timeout'));
   	
-  	if ($lastchange === FALSE) {
-    	// Kein Datum vom Webservice -> Datum aus dem Cache holen
+    if ($lastchange === false) {
+      // Kein Datum vom Webservice -> Datum aus dem Cache holen
       if ($paarungen_cache[$spieltag . $liga . $saison]) {
         $lastchange = array_keys($paarungen_cache[$spieltag . $liga . $saison]);
         $lastchange = $lastchange[0];
       }
-  	} else {
-  	  $lastchange = strtotime(json_decode($lastchange));
+    } else {
+      $lastchange = strtotime(json_decode($lastchange));
     }
   	
     // Spieltag mit diesem Stand schon im Cache?
-    if( isset($paarungen_cache[$spieltag . $liga . $saison][$lastchange]) ) {
+    if (isset($paarungen_cache[$spieltag . $liga . $saison][$lastchange])) {
       $paarungen = $paarungen_cache[$spieltag . $liga . $saison][$lastchange];
     } else {
-  	  // Daten abrufen und in den Cache schreiben
-  	  $paarungen = self::fetchdata('https://www.openligadb.de/api/getmatchdata/' . $liga . '/' . $saison . '/' . $spieltag, $jparams->get('timeout'));
+      // Daten abrufen und in den Cache schreiben
+      $paarungen = self::fetchdata('https://www.openligadb.de/api/getmatchdata/' . $liga . '/' . $saison . '/' . $spieltag, $jparams->get('timeout'));
   	
-  	  if ($paarungen === FALSE || stristr($paarungen, 'Maximale Abfrageanzahl von 1000 Abfragen pro Tag erreicht!') != FALSE) {
-  		  // Webservice nicht erreichbar, prüfen ob Spieltag mit älterem Stand im Cache ist
-  		  if (is_array($paarungen_cache[$spieltag . $liga . $saison])) {
-  			  $paarungen = reset($paarungen_cache[$spieltag . $liga . $saison]);
-  		  }
-  	  } else {
-  		  $paarungen = json_decode($paarungen);
-  		  unset($paarungen_cache[$spieltag . $liga . $saison]);    
-  		  $paarungen_cache[$spieltag . $liga . $saison][$lastchange] = $paarungen;
-  		  file_put_contents($cachefile, serialize($paarungen_cache));
-  	  }
+      if ($paarungen === false || stristr($paarungen, 'Maximale Abfrageanzahl von 1000 Abfragen pro Tag erreicht!') != false) {
+        // Webservice nicht erreichbar, prüfen ob Spieltag mit älterem Stand im Cache ist
+        if (is_array($paarungen_cache[$spieltag . $liga . $saison])) {
+          $paarungen = reset($paarungen_cache[$spieltag . $liga . $saison]);
+        }
+      } else {
+        $paarungen = json_decode($paarungen);
+        unset($paarungen_cache[$spieltag . $liga . $saison]);
+        $paarungen_cache[$spieltag . $liga . $saison][$lastchange] = $paarungen;
+        file_put_contents($cachefile, serialize($paarungen_cache));
+      }
     }
   
-  	// Prüfen wie viele Ergebnisse zu diesem Spieltag vorliegen
-  	$anzahl_ergebnisse = 0;
-  	$anzahl_live = 0;
-	if ($paarungen) {
-  		$bezeichnung = 'bezeichnung_mittel';
-  		foreach($paarungen as $partie){
-  			if (isset($partie->MatchResults[0])) {
-  				$ergebnisse = $partie->MatchResults[0];
-  				if ($ergebnisse instanceof stdClass) {
-  					$anzahl_ergebnisse++;
-  					if ($jparams->get('longnames') == '1') {
-  				    $bezeichnung = 'bezeichnung_mittel';
-  					} else {
-  					  $bezeichnung = 'bezeichnung_kurz';
-  					}
+    // Prüfen wie viele Ergebnisse zu diesem Spieltag vorliegen
+    $anzahl_ergebnisse = 0;
+    $anzahl_live = 0;
+    if ($paarungen) {
+      $bezeichnung = 'bezeichnung_mittel';
+      foreach ($paarungen as $partie) {
+        if (isset($partie->MatchResults[0])) {
+          $ergebnisse = $partie->MatchResults[0];
+          if ($ergebnisse instanceof stdClass) {
+            $anzahl_ergebnisse++;
+            if ($jparams->get('longnames') == '1') {
+              $bezeichnung = 'bezeichnung_mittel';
+            } else {
+              $bezeichnung = 'bezeichnung_kurz';
+            }
   						
-  					if ($partie->MatchIsFinished == false) {
-  						$anzahl_live++;
-  					}
-  			  }
-  		  }
-  		}
+            if ($partie->MatchIsFinished == false) {
+              $anzahl_live++;
+            }
+          }
+        }
+      }
     }
   
-  	// Start HTML OUTPUT	
+    // Start HTML OUTPUT
     $table = "<table border='0' cellpadding='1' cellspacing='1'>\r\n";
       
     // Spieltag Dropdown
-  	if ($liga == 'cl1617') {
-  		$breite = '100';
-  	} else {
-  		$breite = '50';
-  	}
+    if ($liga == 'cl1617') {
+      $breite = '100';
+    } else {
+      $breite = '50';
+    }
     $table .= "<tr>\r\n<td align='left' valign='middle' colspan='7' style='padding-bottom:10px;'><nobr>Spieltag:&nbsp;<select style='min-width: " . $breite . "px;' id='spieltag_" . $module->id . "'>";
   	
-  	if ($liga == 'pl' || $liga == 'sa' || $liga == 'pd') {
-  		$spieltage = 38;
-  	} elseif ($liga == 'cl1617') {
-  		$spieltage = 12;
-  	} else {
-  		$spieltage = 34;
-  	}
+    if ($liga == 'pl' || $liga == 'sa' || $liga == 'pd') {
+      $spieltage = 38;
+    } elseif ($liga == 'cl1617') {
+      $spieltage = 12;
+    } else {
+      $spieltage = 34;
+    }
   
     for ($i=1;$i<=$spieltage;$i++) {
       if ($liga == 'cl1617') {
-  	    $anzeige = $clrunden[$i];
+        $anzeige = $clrunden[$i];
       } else {
-        $anzeige = $i;	
+        $anzeige = $i;
       }
     
       if ($i == $spieltag && $i == $jparams->get('lastCurrentMatchday')) {
@@ -258,7 +258,7 @@ class modBuliergebnisseHelper {
       } elseif ($i == $spieltag) {
         $table .= "<option value='$i' selected='selected'>$anzeige</option>";
       } elseif ($i == $jparams->get('lastCurrentMatchday')) {
-  	    $table .= "<option value='$i' style='font-weight:bold;'>$anzeige</option>";
+        $table .= "<option value='$i' style='font-weight:bold;'>$anzeige</option>";
       } else {
         $table .= "<option value='$i'>$anzeige</option>";
       }
@@ -269,119 +269,121 @@ class modBuliergebnisseHelper {
   
     // Live Spiele anzeigen
     if ($anzahl_ergebnisse > 0 && $anzahl_live == 1) {
-  	  $table .= "<tr>\r\n<td align='center' valign='middle' colspan='7'><font color='red'><b>JETZT EIN SPIEL LIVE!</b></font></td>\r\n</tr>\r\n";
+      $table .= "<tr>\r\n<td align='center' valign='middle' colspan='7'><font color='red'><b>JETZT EIN SPIEL LIVE!</b></font></td>\r\n</tr>\r\n";
     } elseif ($anzahl_ergebnisse > 0 && $anzahl_live > 1) {
-  	  $table .= "<tr>\r\n<td align='center' valign='middle' colspan='7'><font color='red'><b>JETZT ".$anzahl_live." SPIELE LIVE!</b></font></td>\r\n</tr>\r\n";
+      $table .= "<tr>\r\n<td align='center' valign='middle' colspan='7'><font color='red'><b>JETZT ".$anzahl_live." SPIELE LIVE!</b></font></td>\r\n</tr>\r\n";
     }
   
     if (!$paarungen) {
-  	  $table .= '</table>' . $jparams->get('timeout_error');
-  	  return $table;
+      $table .= '</table>' . $jparams->get('timeout_error');
+
+      return $table;
     }
   
-  	$i = 0;
-  	$termin = '';
-  	foreach($paarungen as $partie){
-  		$i++;
+    $i = 0;
+    $termin = '';
+    foreach ($paarungen as $partie) {
+      $i++;
   		
-  		if (trim($partie->Team1->TeamName) == $jparams->get('meinVerein') ||  trim($partie->Team2->TeamName) == $jparams->get('meinVerein')) {
-  			$style = $jparams->get('meinVereinCSS');
-  		} else {
-  			$style = '';
-  		}
+      if (trim($partie->Team1->TeamName) == $jparams->get('meinVerein') ||  trim($partie->Team2->TeamName) == $jparams->get('meinVerein')) {
+        $style = $jparams->get('meinVereinCSS');
+      } else {
+        $style = '';
+      }
   		
-  		if ( $termin != $partie->MatchDateTime && !$jparams->get('kompakt') ) {
-  			if ($i==1) {
-  				$table .= "<tr>\r\n<td align='left' valign='middle' colspan='7'><b><i>".$tage[date("w",strtotime($partie->MatchDateTime))]." ".date("d.m. H:i",strtotime($partie->MatchDateTime))." Uhr</i></b></td>\r\n</tr>\r\n";
-  			} else {
-  				$table .= "<tr>\r\n<td align='left' valign='middle' colspan='7' style='padding-top:10px;'><b><i>".$tage[date("w",strtotime($partie->MatchDateTime))]." ".date("d.m. H:i",strtotime($partie->MatchDateTime))." Uhr</i></b></td>\r\n</tr>\r\n";  
-  			}
-  		}
+      if ($termin != $partie->MatchDateTime && !$jparams->get('kompakt')) {
+        if ($i==1) {
+          $table .= "<tr>\r\n<td align='left' valign='middle' colspan='7'><b><i>".$tage[date("w", strtotime($partie->MatchDateTime))]." ".date("d.m. H:i", strtotime($partie->MatchDateTime))." Uhr</i></b></td>\r\n</tr>\r\n";
+        } else {
+          $table .= "<tr>\r\n<td align='left' valign='middle' colspan='7' style='padding-top:10px;'><b><i>".$tage[date("w", strtotime($partie->MatchDateTime))]." ".date("d.m. H:i", strtotime($partie->MatchDateTime))." Uhr</i></b></td>\r\n</tr>\r\n";
+        }
+      }
   		
-  		$table .= "<tr style='$style'>\r\n";
+      $table .= "<tr style='$style'>\r\n";
   
-  		if ($jparams->get('kompakt')) {	
-  			if ($liga == 'cl1617') {
-  				$table .= "<td align='left' valign='middle'>".date("d.m.",strtotime($partie->MatchDateTime))."</td>\r\n";
-  			} else {
-  				$table .= "<td align='left' valign='middle'>".$tage[date("w",strtotime($partie->MatchDateTime))]."</td>\r\n";
-  			}
-  		}
+      if ($jparams->get('kompakt')) {
+        if ($liga == 'cl1617') {
+          $table .= "<td align='left' valign='middle'>".date("d.m.", strtotime($partie->MatchDateTime))."</td>\r\n";
+        } else {
+          $table .= "<td align='left' valign='middle'>".$tage[date("w", strtotime($partie->MatchDateTime))]."</td>\r\n";
+        }
+      }
     
-  		$termin = $partie->MatchDateTime;
+      $termin = $partie->MatchDateTime;
   
-  		// Team 1
-  		$table .= "<td align='left' valign='middle'><img style='width:20px; height:20px;' title='".$teams[trim($partie->Team1->TeamName)]['bezeichnung_mittel']."' alt='".$teams[trim($partie->Team1->TeamName)]['bezeichnung_mittel']."' src='".JURI::root()."modules/mod_buliergebnisse/images/".$teams[trim($partie->Team1->TeamName)]['dateiname_logo']."' /></td>\r\n";
-  		$table .= "<td align='left' valign='middle'>".$teams[trim($partie->Team1->TeamName)][$bezeichnung]."</td>\r\n";
+      // Team 1
+      $table .= "<td align='left' valign='middle'><img style='width:20px; height:20px;' title='".$teams[trim($partie->Team1->TeamName)]['bezeichnung_mittel']."' alt='".$teams[trim($partie->Team1->TeamName)]['bezeichnung_mittel']."' src='".JURI::root()."modules/mod_buliergebnisse/images/".$teams[trim($partie->Team1->TeamName)]['dateiname_logo']."' /></td>\r\n";
+      $table .= "<td align='left' valign='middle'>".$teams[trim($partie->Team1->TeamName)][$bezeichnung]."</td>\r\n";
   		
-  		$table .= "<td align='left' valign='middle'>-&nbsp;</td>\r\n";
+      $table .= "<td align='left' valign='middle'>-&nbsp;</td>\r\n";
   		
-  		// Team 2
-  		$table .= "<td align='left' valign='middle'><img style='width:20px; height:20px;' title='".$teams[trim($partie->Team2->TeamName)]['bezeichnung_mittel']."' alt='".$teams[trim($partie->Team2->TeamName)]['bezeichnung_mittel']."' src='".JURI::root()."modules/mod_buliergebnisse/images/".$teams[trim($partie->Team2->TeamName)]['dateiname_logo']."' /></td>\r\n";
-  		$table .= "<td align='left' valign='middle'>".$teams[trim($partie->Team2->TeamName)][$bezeichnung]."</td>\r\n";
+      // Team 2
+      $table .= "<td align='left' valign='middle'><img style='width:20px; height:20px;' title='".$teams[trim($partie->Team2->TeamName)]['bezeichnung_mittel']."' alt='".$teams[trim($partie->Team2->TeamName)]['bezeichnung_mittel']."' src='".JURI::root()."modules/mod_buliergebnisse/images/".$teams[trim($partie->Team2->TeamName)]['dateiname_logo']."' /></td>\r\n";
+      $table .= "<td align='left' valign='middle'>".$teams[trim($partie->Team2->TeamName)][$bezeichnung]."</td>\r\n";
   		
-  		$tootip_text = "";
-  		$endergebnis = "";
-  		$halbzeitergebnis = "";
-  		if ($anzahl_ergebnisse > 0) {
-  			$table .= "<td align='left' valign='middle'>";
-  			$alle_ergebnisse = $partie->MatchResults;
-  			if (isset($alle_ergebnisse[0])) {
-				if (!$partie->MatchIsFinished && $alle_ergebnisse[0] instanceof stdClass) {
-					$tootip_text .= "<font color=red>";
-				}
-			}
-  			$table .= "<nobr>&nbsp;";
+      $tootip_text = "";
+      $endergebnis = "";
+      $halbzeitergebnis = "";
+      if ($anzahl_ergebnisse > 0) {
+        $table .= "<td align='left' valign='middle'>";
+        $alle_ergebnisse = $partie->MatchResults;
+        if (isset($alle_ergebnisse[0])) {
+          if (!$partie->MatchIsFinished && $alle_ergebnisse[0] instanceof stdClass) {
+            $tootip_text .= "<font color=red>";
+          }
+        }
+        $table .= "<nobr>&nbsp;";
   			
-  			if (! is_array($alle_ergebnisse) || count($alle_ergebnisse) == 0 ) {
-  				$tootip_text .= '-:- (-:-)';
-  			} else {
-  				// Halbzeitergebnis / Endergebnis ermitteln
-  				foreach($alle_ergebnisse as $ergebnis) {
-  					if ($ergebnis->ResultName == 'Endergebnis') {
-  						$endergebnis = $ergebnis->PointsTeam1.":".$ergebnis->PointsTeam2;
-  					} elseif ($ergebnis->ResultName == 'Halbzeitergebnis' || $ergebnis->ResultName == 'Halbzeit') {
-  						$halbzeitergebnis = " (".$ergebnis->PointsTeam1.":".$ergebnis->PointsTeam2.")";
-  					}
-  				}
-  				if ($endergebnis == '') {
-  					$endergebnis = '0:0';
-  				}
-  				$tootip_text .= $endergebnis . $halbzeitergebnis;
+        if (! is_array($alle_ergebnisse) || count($alle_ergebnisse) == 0) {
+          $tootip_text .= '-:- (-:-)';
+        } else {
+          // Halbzeitergebnis / Endergebnis ermitteln
+          foreach ($alle_ergebnisse as $ergebnis) {
+            if ($ergebnis->ResultName == 'Endergebnis') {
+              $endergebnis = $ergebnis->PointsTeam1.":".$ergebnis->PointsTeam2;
+            } elseif ($ergebnis->ResultName == 'Halbzeitergebnis' || $ergebnis->ResultName == 'Halbzeit') {
+              $halbzeitergebnis = " (".$ergebnis->PointsTeam1.":".$ergebnis->PointsTeam2.")";
+            }
+          }
+          if ($endergebnis == '') {
+            $endergebnis = '0:0';
+          }
+          $tootip_text .= $endergebnis . $halbzeitergebnis;
   				
-  				$goals = '';
-  				foreach ($partie->Goals as $goal) {
-  					if ($goal->GoalGetterName) {
-  					  if ($goal->MatchMinute) {
-  						  $goals .= '<b>' . $goal->ScoreTeam1 . ':' . $goal->ScoreTeam2 . '</b>&nbsp;&nbsp;' . $goal->GoalGetterName . ' (' . $goal->MatchMinute . '.)<br>';
-  					  } else {
-  						  $goals .= '<b>' . $goal->ScoreTeam1 . ':' . $goal->ScoreTeam2 . '</b>&nbsp;&nbsp;' . $goal->GoalGetterName . '<br>';
-  					  }
-  					}
-  				}
-  			}
-  			if (isset($partie->matchIsFinished)) {
-  				if (!$partie->matchIsFinished && $alle_ergebnisse[0] instanceof stdClass) {
-  					$tootip_text .= "</font>";
-  				}
-  			}
+          $goals = '';
+          foreach ($partie->Goals as $goal) {
+            if ($goal->GoalGetterName) {
+              if ($goal->MatchMinute) {
+                $goals .= '<b>' . $goal->ScoreTeam1 . ':' . $goal->ScoreTeam2 . '</b>&nbsp;&nbsp;' . $goal->GoalGetterName . ' (' . $goal->MatchMinute . '.)<br>';
+              } else {
+                $goals .= '<b>' . $goal->ScoreTeam1 . ':' . $goal->ScoreTeam2 . '</b>&nbsp;&nbsp;' . $goal->GoalGetterName . '<br>';
+              }
+            }
+          }
+        }
+        if (isset($partie->matchIsFinished)) {
+          if (!$partie->matchIsFinished && $alle_ergebnisse[0] instanceof stdClass) {
+            $tootip_text .= "</font>";
+          }
+        }
   			
-  			$tootip_text .= "</nobr>";
+        $tootip_text .= "</nobr>";
   			
-  			if ($goals <> '') {	
-  				$table .= JHtml::_('tooltip', $goals, 'Tore', '', $tootip_text);
-  			} else {
-  				$table .= $tootip_text;
-  			}
+        if ($goals <> '') {
+          $table .= JHtml::_('tooltip', $goals, 'Tore', '', $tootip_text);
+        } else {
+          $table .= $tootip_text;
+        }
   			
-  			$table .= "</td>\r\n";
-  		} elseif ($jparams->get('longnames') == '1') {
-  			$table .= "<td>-:- (-:-)</td>\r\n";
-  		}
-  		$table .= "</tr>\r\n";
-  	}
+        $table .= "</td>\r\n";
+      } elseif ($jparams->get('longnames') == '1') {
+        $table .= "<td>-:- (-:-)</td>\r\n";
+      }
+      $table .= "</tr>\r\n";
+    }
   
     $table .= "</table>\r\n";
+
     return $table;
   }
 }

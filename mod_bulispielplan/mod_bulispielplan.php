@@ -2,9 +2,9 @@
 /**
  * helper.php - (c) Markus Krupp
  * Die Daten werden vom Webservice openligadb.de bereitgestellt.
- * 
+ *
  * Historie:
- * 
+ *
  * 1.00 - Erste Veröffentlichung
  * 1.1  - Dropdown mit Vereinslogos
  * 1.2  - Bugfix DFB Pokal
@@ -24,20 +24,18 @@
  */
  
 	// no direct access
-	defined( '_JEXEC' ) or die( 'Restricted access' );
-	header('Content-Type: text/html; charset=utf-8'); 
+	defined('_JEXEC') or die('Restricted access');
+	header('Content-Type: text/html; charset=utf-8');
 
 	require_once 'helper.php';
 
-	try{
-		$ergebnisse = New modBulispielplanHelper($module, $params);
-		$strHTMLOutput = "\r\n<!-- Bundesliga-Spielplan 1.17 - (c) Markus Krupp - http://www.jbuli.de-->\r\n";
-		$strHTMLOutput .= '<div id="bulispielplan_' . $module->id . '"> <img id="bulispielplan_loading_' . $module->id . '" src="'.JURI::root().'modules/mod_bulispielplan/images/ajax-loader.gif"></div>';
-	}
-	catch (Exception $e) {
-		//echo $e->getMessage();
-		echo '<div align="left">'.$params->get('timeout_error').'</div>';
+	try {
+	  $ergebnisse = new modBulispielplanHelper($module, $params);
+	  $strHTMLOutput = "\r\n<!-- Bundesliga-Spielplan 1.17 - (c) Markus Krupp - http://www.jbuli.de-->\r\n";
+	  $strHTMLOutput .= '<div id="bulispielplan_' . $module->id . '"> <img id="bulispielplan_loading_' . $module->id . '" src="'.JURI::root().'modules/mod_bulispielplan/images/ajax-loader.gif"></div>';
+	} catch (Exception $e) {
+	  //echo $e->getMessage();
+	  echo '<div align="left">'.$params->get('timeout_error').'</div>';
 	}
 
-	require( JModuleHelper::getLayoutPath( 'mod_bulispielplan' ) );
-?>
+	require JModuleHelper::getLayoutPath('mod_bulispielplan');

@@ -7,8 +7,9 @@ class mod_bulispielplanInstallerScript
    *
    * @param   JAdapterInstance  $adapter  The object responsible for running this script
    */
-  public function __construct(JAdapterInstance $adapter) {}
-  
+  public function __construct(JAdapterInstance $adapter)
+  {
+  }
   
   /**
    * Called before any type of action
@@ -18,8 +19,9 @@ class mod_bulispielplanInstallerScript
    *
    * @return  boolean  True on success
    */
-  public function preflight($route, JAdapterInstance $adapter) {}
-  
+  public function preflight($route, JAdapterInstance $adapter)
+  {
+  }
   
   /**
    * Called after any type of action
@@ -29,8 +31,9 @@ class mod_bulispielplanInstallerScript
    *
    * @return  boolean  True on success
    */
-  public function postflight($route, JAdapterInstance $adapter) {}
-  
+  public function postflight($route, JAdapterInstance $adapter)
+  {
+  }
   
   /**
    * Called on installation
@@ -39,7 +42,8 @@ class mod_bulispielplanInstallerScript
    *
    * @return  boolean  True on success
    */
-  public function install(JAdapterInstance $adapter){
+  public function install(JAdapterInstance $adapter)
+  {
     $this->setupDatabase();
   }
   
@@ -50,7 +54,8 @@ class mod_bulispielplanInstallerScript
    *
    * @return  boolean  True on success
    */
-  public function update(JAdapterInstance $adapter) {
+  public function update(JAdapterInstance $adapter)
+  {
     $db = JFactory::getDbo();
     $query = 'DROP TABLE '.$db->quoteName('#__bulispielplan');
     
@@ -65,7 +70,8 @@ class mod_bulispielplanInstallerScript
    *
    * @param   JAdapterInstance  $adapter  The object responsible for running this script
    */
-  public function uninstall(JAdapterInstance $adapter) {
+  public function uninstall(JAdapterInstance $adapter)
+  {
     $db = JFactory::getDbo();
     $query = 'DROP TABLE '.$db->quoteName('#__bulispielplan');
     
@@ -73,7 +79,8 @@ class mod_bulispielplanInstallerScript
     $db->query();
   }
   
-  private function setupDatabase() {
+  private function setupDatabase()
+  {
     $db = JFactory::getDbo();
     $query = 'CREATE TABLE IF NOT EXISTS '.$db->quoteName('#__bulispielplan').' (ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, liga VARCHAR(7), bezeichnung_webservice VARCHAR(100), bezeichnung_kurz VARCHAR(100), bezeichnung_mittel VARCHAR(100), dateiname_logo VARCHAR(100))';
     
@@ -121,17 +128,15 @@ class mod_bulispielplanInstallerScript
 			   (34, 'bl2', 'VfL Osnabrück', 'OSN', 'Osnabrück', 'osnabrueck.png'),
 			   (35, 'bl2', 'SV Wehen Wiesbaden', 'WIS', 'Wiesbaden', 'wiesbaden.png'),
 			   (36, 'bl2', 'Karlsruher SC', 'KSC', 'Karlsruhe', 'karlsruhe.png');
-			   "; 
+			   ";
   
     $db->setQuery($query);
     $db->query();
 	
-	foreach (glob(JPATH_BASE."/../modules/mod_bulispielplan/cache_*.txt") as $cachefile) {
-      if ( is_readable($cachefile) ) {
-	    unlink($cachefile);
-	  }
-	}
+    foreach (glob(JPATH_BASE."/../modules/mod_bulispielplan/cache_*.txt") as $cachefile) {
+      if (is_readable($cachefile)) {
+        unlink($cachefile);
+      }
+    }
   }
 }
-
-?>

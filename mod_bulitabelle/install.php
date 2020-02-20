@@ -7,8 +7,9 @@ class mod_bulitabelleInstallerScript
    *
    * @param   JAdapterInstance  $adapter  The object responsible for running this script
    */
-  public function __construct(JAdapterInstance $adapter) {}
-  
+  public function __construct(JAdapterInstance $adapter)
+  {
+  }
   
   /**
    * Called before any type of action
@@ -18,8 +19,9 @@ class mod_bulitabelleInstallerScript
    *
    * @return  boolean  True on success
    */
-  public function preflight($route, JAdapterInstance $adapter) {}
-  
+  public function preflight($route, JAdapterInstance $adapter)
+  {
+  }
   
   /**
    * Called after any type of action
@@ -29,8 +31,9 @@ class mod_bulitabelleInstallerScript
    *
    * @return  boolean  True on success
    */
-  public function postflight($route, JAdapterInstance $adapter) {}
-  
+  public function postflight($route, JAdapterInstance $adapter)
+  {
+  }
   
   /**
    * Called on installation
@@ -39,7 +42,8 @@ class mod_bulitabelleInstallerScript
    *
    * @return  boolean  True on success
    */
-  public function install(JAdapterInstance $adapter){
+  public function install(JAdapterInstance $adapter)
+  {
     $this->setupDatabase();
   }
   
@@ -50,7 +54,8 @@ class mod_bulitabelleInstallerScript
    *
    * @return  boolean  True on success
    */
-  public function update(JAdapterInstance $adapter) {
+  public function update(JAdapterInstance $adapter)
+  {
     $this->setupDatabase();
   }
   
@@ -59,7 +64,8 @@ class mod_bulitabelleInstallerScript
    *
    * @param   JAdapterInstance  $adapter  The object responsible for running this script
    */
-  public function uninstall(JAdapterInstance $adapter) {
+  public function uninstall(JAdapterInstance $adapter)
+  {
     $db = JFactory::getDbo();
     $query = 'DROP TABLE '.$db->quoteName('#__bulitabelle');
     
@@ -67,7 +73,8 @@ class mod_bulitabelleInstallerScript
     $db->query();
   }
   
-  private function setupDatabase() {
+  private function setupDatabase()
+  {
     $db = JFactory::getDbo();
     $query = 'CREATE TABLE IF NOT EXISTS '.$db->quoteName('#__bulitabelle').' (ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, team VARCHAR(100), spiele INT, tore INT, gegentore INT, punkte INT, modul_id INT)';
     $db->setQuery($query);
@@ -77,11 +84,9 @@ class mod_bulitabelleInstallerScript
     $db->setQuery($query);
     $db->query();
 	
-	$cachefile = JPATH_BASE."/../modules/mod_bulitabelle/cache.txt";
-	if ( is_readable($cachefile) ) {
-	  unlink($cachefile);
-	}
+    $cachefile = JPATH_BASE."/../modules/mod_bulitabelle/cache.txt";
+    if (is_readable($cachefile)) {
+      unlink($cachefile);
+    }
   }
 }
-
-?>
