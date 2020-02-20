@@ -3,7 +3,8 @@ Fußball Ergebnisse, Tabellen und Spielpläne für Joomla
 
 http://www.jbuli.de/
 
-# BUNDESLIGA SPIELPLAN-MODUL FÜR JOOMLA 3
+
+## BUNDESLIGA SPIELPLAN-MODUL FÜR JOOMLA 3
 Joomla Modul zur Anzeige aller Spiele eines Vereins aus der 1. oder 2. Fussball Bundesliga
 
 Features
@@ -21,7 +22,9 @@ Features
 - Garantiert werbe- und kostenfrei!
 
 
-# Joomla Modul zur Anzeige einzelner Spieltage der 1. und 2. Fussball Bundesliga, ChampionsLeague, Premier League, Primera Division und Serie A
+
+## FUSSBALL ERGEBNIS-MODUL FÜR JOOMLA 
+Joomla Modul zur Anzeige einzelner Spieltage der 1. und 2. Fussball Bundesliga, ChampionsLeague, Premier League, Primera Division und Serie A
 
 Features
 
@@ -39,7 +42,8 @@ Features
 - Garantiert werbe- und kostenfrei!
 
 
-# BUNDESLIGA TABELLEN-MODUL FÜR JOOMLA 3
+
+## BUNDESLIGA TABELLEN-MODUL FÜR JOOMLA 3
 Joomla Modul zur Anzeige der aktuellen Tabelle der 1. und 2. Fussball Bundesliga
 
 Features
