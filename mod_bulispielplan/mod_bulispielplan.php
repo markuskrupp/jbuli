@@ -12,7 +12,7 @@
 
 	try {
 	  $ergebnisse = new modBulispielplanHelper($module, $params);
-	  $strHTMLOutput = "\r\n<!-- Bundesliga-Spielplan 1.17 - (c) Markus Krupp - http://www.jbuli.de-->\r\n";
+	  $strHTMLOutput = "\r\n<!-- Bundesliga-Spielplan 1.18 - (c) Markus Krupp - http://www.jbuli.de-->\r\n";
 	  $strHTMLOutput .= '<div id="bulispielplan_' . $module->id . '"> <img id="bulispielplan_loading_' . $module->id . '" src="'.JURI::root().'modules/mod_bulispielplan/images/ajax-loader.gif"></div>';
 	} catch (Exception $e) {
 	  //echo $e->getMessage();

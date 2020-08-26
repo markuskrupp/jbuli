@@ -326,6 +326,7 @@ class modBulitabelleHelper
       '1. FC Magdeburg' => 'Magdeburg',
       'VfL Osnabrück' => 'Osnabrück',
       'SV Wehen Wiesbaden' => 'Wiesbaden',
+      'Würzburger Kickers' => 'Würzburg'
     ];
         
     if (count($tabelle) == 0) {

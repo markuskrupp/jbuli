@@ -216,7 +216,7 @@ class mod_buliergebnisseInstallerScript
 				(129, 'Hull City AFC', 'HUL', 'Hull', 'hull.png'),
 				(130, 'Burnley FC', 'BUR', 'Burnley', 'burnley.png'),
 				(131, 'FC Middlesbrough', 'MID', 'Middlesbrough', 'middlesbrough.png'),
-				(132, 'FC Kickers Würzburg', 'WÜB', 'Würzburg', 'wuerzburg.png'),
+				(132, 'Würzburger Kickers', 'WÜB', 'Würzburg', 'wuerzburg.png'),
 				(133, 'FC Basel', 'BAS', 'Basel', 'basel.png'),
 				(134, 'Ludogorez Rasgrad', 'RAS', 'Rasgrad', 'rasgrad.png'),
 				(135, 'Besiktas Istanbul', 'IST', 'Istanbul', 'besiktas.png'),
