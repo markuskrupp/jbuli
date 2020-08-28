@@ -81,9 +81,9 @@ class modBulitabelleHelper
       ]);
 
       return file_get_contents($url, 0, $context);
-    } else {
-      return false;
     }
+
+    return false;
   }
  
   /**
@@ -352,7 +352,7 @@ class modBulitabelleHelper
         $trstyle = '';
       }
       
-      if ($jparams->get('league') == 'bl1' && ($platz == 3 || $platz == 4 || $platz ==  6 || $platz == 15 || $platz == 16) ||
+      if ($jparams->get('league') == 'bl1' && ($platz == 4 || $platz == 5 || $platz ==  6 || $platz == 15 || $platz == 16) ||
         $jparams->get('league') == 'bl2' && ($platz == 2 || $platz == 3 || $platz ==  15 || $platz == 16)) {
         $tdstyle .= ' border-bottom: 1px solid #A6A6A6;';
       }
