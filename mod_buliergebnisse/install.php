@@ -235,7 +235,8 @@ class mod_buliergebnisseInstallerScript
                 (148, '1. FC Magdeburg', 'MAG', 'Magdeburg', 'magdeburg.png'),
 			    (149, 'VfL Osnabrück', 'OSN', 'Osnabrück', 'osnabrueck.png'),
 			    (150, 'SV Wehen Wiesbaden', 'WIS', 'Wiesbaden', 'wiesbaden.png'),
-			    (151, 'Karlsruher SC', 'KSC', 'Karlsruhe', 'karlsruhe.png');
+			    (151, 'Karlsruher SC', 'KSC', 'Karlsruhe', 'karlsruhe.png'),
+				(152, 'Hansa Rostock', 'ROS', 'Rostock', 'rostock.png');
 			   ";
   
     $db->setQuery($query);

@@ -12,7 +12,7 @@
   
   try {
     $tabelle = new modBulitabelleHelper($module);
-    $strHTMLOutput = "\r\n<!-- Bundesliga-Tabelle 1.17 - (c) Markus Krupp - http://www.jbuli.de-->\r\n";
+    $strHTMLOutput = "\r\n<!-- Bundesliga-Tabelle 1.18 - (c) Markus Krupp - http://www.jbuli.de-->\r\n";
     $strHTMLOutput .= '<div id="bulitabelle_' . $module->id . '"> <img id="bulitabelle_loading_' . $module->id . '" src="'.JURI::root().'modules/mod_bulitabelle/images/ajax-loader.gif"></div>';
   } catch (Exception $e) {
     echo '<div align="left">Ein Fehler ist aufgetreten:<br>' . $e->getMessage() . '</div>';

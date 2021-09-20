@@ -12,7 +12,7 @@
 
 	try {
 	  $ergebnisse = new modBuliergebnisseHelper($module);
-	  $strHTMLOutput = "\r\n<!-- Bundesliga-Ergebnisse 1.21 - (c) Markus Krupp - http://www.jbuli.de-->\r\n";
+	  $strHTMLOutput = "\r\n<!-- Bundesliga-Ergebnisse 1.22 - (c) Markus Krupp - http://www.jbuli.de-->\r\n";
 	  $strHTMLOutput .= "<div id='spielplan_" . $module->id . "'> <img id='buliergebnisse_loading_" . $module->id . "' src='".JURI::root()."modules/mod_buliergebnisse/images/ajax-loader.gif'></div>\r\n";
 	} catch (Exception $e) {
 	  //echo $e->getMessage();
