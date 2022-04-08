@@ -2,90 +2,90 @@
 
 class mod_buliergebnisseInstallerScript
 {
-  /**
-   * Constructor
-   *
-   * @param   JAdapterInstance  $adapter  The object responsible for running this script
-   */
-  public function __construct(JAdapterInstance $adapter)
-  {
-  }
-  
-  /**
-   * Called before any type of action
-   *
-   * @param   string  $route  Which action is happening (install|uninstall|discover_install|update)
-   * @param   JAdapterInstance  $adapter  The object responsible for running this script
-   *
-   * @return  boolean  True on success
-   */
-  public function preflight($route, JAdapterInstance $adapter)
-  {
-  }
-  
-  /**
-   * Called after any type of action
-   *
-   * @param   string  $route  Which action is happening (install|uninstall|discover_install|update)
-   * @param   JAdapterInstance  $adapter  The object responsible for running this script
-   *
-   * @return  boolean  True on success
-   */
-  public function postflight($route, JAdapterInstance $adapter)
-  {
-  }
-  
-  /**
-   * Called on installation
-   *
-   * @param   JAdapterInstance  $adapter  The object responsible for running this script
-   *
-   * @return  boolean  True on success
-   */
-  public function install(JAdapterInstance $adapter)
-  {
-    $this->setupDatabase();
-  }
-  
-  /**
-   * Called on update
-   *
-   * @param   JAdapterInstance  $adapter  The object responsible for running this script
-   *
-   * @return  boolean  True on success
-   */
-  public function update(JAdapterInstance $adapter)
-  {
-    $this->setupDatabase();
-  }
-  
-  /**
-   * Called on uninstallation
-   *
-   * @param   JAdapterInstance  $adapter  The object responsible for running this script
-   */
-  public function uninstall(JAdapterInstance $adapter)
-  {
-    $db = JFactory::getDbo();
-    $query = 'DROP TABLE '.$db->quoteName('#__buliergebnisse');
-    
-    $db->setQuery($query);
-    $db->query();
-  }
-  
-  private function setupDatabase()
-  {
-    $db = JFactory::getDbo();
-    $query = 'CREATE TABLE IF NOT EXISTS '.$db->quoteName('#__buliergebnisse').' (ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, bezeichnung_webservice VARCHAR(100), bezeichnung_kurz VARCHAR(100), bezeichnung_mittel VARCHAR(100), dateiname_logo VARCHAR(100))';
-    
-    $db->setQuery($query);
-    $db->query();
-    
-    $query = 'TRUNCATE TABLE '.$db->quoteName('#__buliergebnisse');
-    $db->setQuery($query);
-    $db->query();
-    
-    $query = "INSERT INTO ".$db->quoteName('#__buliergebnisse')." VALUES
+    /**
+     * Constructor
+     *
+     * @param   JAdapterInstance  $adapter  The object responsible for running this script
+     */
+    public function __construct(JAdapterInstance $adapter)
+    {
+    }
+
+    /**
+     * Called before any type of action
+     *
+     * @param   string  $route  Which action is happening (install|uninstall|discover_install|update)
+     * @param   JAdapterInstance  $adapter  The object responsible for running this script
+     *
+     * @return  boolean  True on success
+     */
+    public function preflight($route, JAdapterInstance $adapter)
+    {
+    }
+
+    /**
+     * Called after any type of action
+     *
+     * @param   string  $route  Which action is happening (install|uninstall|discover_install|update)
+     * @param   JAdapterInstance  $adapter  The object responsible for running this script
+     *
+     * @return  boolean  True on success
+     */
+    public function postflight($route, JAdapterInstance $adapter)
+    {
+    }
+
+    /**
+     * Called on installation
+     *
+     * @param   JAdapterInstance  $adapter  The object responsible for running this script
+     *
+     * @return  boolean  True on success
+     */
+    public function install(JAdapterInstance $adapter)
+    {
+        $this->setupDatabase();
+    }
+
+    /**
+     * Called on update
+     *
+     * @param   JAdapterInstance  $adapter  The object responsible for running this script
+     *
+     * @return  boolean  True on success
+     */
+    public function update(JAdapterInstance $adapter)
+    {
+        $this->setupDatabase();
+    }
+
+    /**
+     * Called on uninstallation
+     *
+     * @param   JAdapterInstance  $adapter  The object responsible for running this script
+     */
+    public function uninstall(JAdapterInstance $adapter)
+    {
+        $db = JFactory::getDbo();
+        $query = 'DROP TABLE '.$db->quoteName('#__buliergebnisse');
+
+        $db->setQuery($query);
+        $db->query();
+    }
+
+    private function setupDatabase()
+    {
+        $db = JFactory::getDbo();
+        $query = 'CREATE TABLE IF NOT EXISTS '.$db->quoteName('#__buliergebnisse').' (ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, bezeichnung_webservice VARCHAR(100), bezeichnung_kurz VARCHAR(100), bezeichnung_mittel VARCHAR(100), dateiname_logo VARCHAR(100))';
+
+        $db->setQuery($query);
+        $db->query();
+
+        $query = 'TRUNCATE TABLE '.$db->quoteName('#__buliergebnisse');
+        $db->setQuery($query);
+        $db->query();
+
+        $query = "INSERT INTO ".$db->quoteName('#__buliergebnisse')." VALUES
 				(1, 'VfL Wolfsburg', 'WOL', 'Wolfsburg', 'wolfsburg.png'), 
 				(2, 'FC Schalke 04', 'S04', 'Schalke', 'schalke.png'),
 				(3, 'TSG 1899 Hoffenheim', 'HOF', 'Hoffenheim', 'hoffenheim.png'), 
@@ -238,13 +238,13 @@ class mod_buliergebnisseInstallerScript
 			    (151, 'Karlsruher SC', 'KSC', 'Karlsruhe', 'karlsruhe.png'),
 				(152, 'FC Hansa Rostock', 'ROS', 'Rostock', 'rostock.png');
 			   ";
-  
-    $db->setQuery($query);
-    $db->query();
-	
-    $cachefile = JPATH_BASE."/../modules/mod_buliergebnisse/cache.txt";
-    if (is_readable($cachefile)) {
-      unlink($cachefile);
+
+        $db->setQuery($query);
+        $db->query();
+
+        $cachefile = JPATH_BASE."/../modules/mod_buliergebnisse/cache.txt";
+        if (is_readable($cachefile)) {
+            unlink($cachefile);
+        }
     }
-  }
 }
