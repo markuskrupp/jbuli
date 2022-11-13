@@ -2,12 +2,12 @@
 <extension type="module" version="3.0" client="site" method="upgrade">
 	<name>Bundesliga-Spielplan</name>
 	<author>Markus Krupp</author>
-	<creationDate>20.09.2021</creationDate>
-	<copyright>(C) 2021 Markus Krupp</copyright>
+	<creationDate>13.11.2022</creationDate>
+	<copyright>(C) 2022 Markus Krupp</copyright>
 	<license>GNU/GPL</license>
 	<authorEmail>webmaster@krupphome.de</authorEmail>
 	<authorUrl>www.jbuli.de</authorUrl>
-	<version>1.19</version>
+	<version>1.20</version>
 	<description>Bundesliga Spielplan für Joomla</description>
   <scriptfile>install.php</scriptfile>
 	<files>
@@ -40,7 +40,6 @@
 					<option value="Borussia Dortmund">Borussia Dortmund</option>
 					<option value="Borussia Mönchengladbach">Borussia Mönchengladbach</option>
 					<option value="Eintracht Frankfurt">Eintracht Frankfurt</option>
-					<option value="Erzgebirge Aue">Erzgebirge Aue</option>
 					<option value="FC Augsburg">FC Augsburg</option>
 					<option value="FC Schalke 04">FC Schalke 04</option>
 					<option value="FC St. Pauli">FC St. Pauli</option>
@@ -58,14 +57,14 @@
 					<option value="VfL Bochum">VfL Bochum</option>
 					<option value="VfL Wolfsburg">VfL Wolfsburg</option>
 					<option value="Werder Bremen">Werder Bremen</option>
-					<option value="SG Dynamo Dresden">SG Dynamo Dresden</option>
 					<option value="Jahn Regensburg">Jahn Regensburg</option>
 					<option value="Holstein Kiel">Holstein Kiel</option>
-                    <option value="SpVgg Greuther Fürth">SpVgg Greuther Fürth</option>
-					<option value="VfL Osnabrück">VfL Osnabrück</option>	
-					<option value="SV Wehen Wiesbaden">SV Wehen Wiesbaden</option>	
+                    <option value="SpVgg Greuther Fürth">SpVgg Greuther Fürth</option>	
 					<option value="Karlsruher SC">Karlsruher SC</option>	
-					<option value="Hansa Rostock">Hansa Rostock</option>	  
+					<option value="Hansa Rostock">Hansa Rostock</option>
+					<option value="1. FC Kaiserslautern">1. FC Kaiserslautern</option>	
+					<option value="1. FC Magdeburg">1. FC Magdeburg</option>	
+					<option value="Eintracht Braunschweig">Eintracht Braunschweig</option>	
 				</field>				
 			</fieldset>
 			<fieldset name="advanced">

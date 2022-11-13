@@ -96,9 +96,9 @@ class mod_bulispielplanInstallerScript
 
         $query = "INSERT INTO ".$db->quoteName('#__bulispielplan')." VALUES
                (1, 'bl1', 'VfL Wolfsburg', 'WOL', 'Wolfsburg', 'wolfsburg.png'), 
-               (2, 'bl2', 'FC Schalke 04', 'S04', 'Schalke', 'schalke.png'),
+               (2, 'bl1', 'FC Schalke 04', 'S04', 'Schalke', 'schalke.png'),
                (3, 'bl1', 'TSG 1899 Hoffenheim', 'HOF', 'Hoffenheim', 'hoffenheim.png'), 
-               (4, 'bl2', 'Werder Bremen', 'BRE', 'Bremen', 'bremen.png'),
+               (4, 'bl1', 'Werder Bremen', 'BRE', 'Bremen', 'bremen.png'),
                (5, 'bl1', 'Borussia Mönchengladbach', 'BMG', 'M''Gladbach', 'gladbach.png'), 
                (6, 'bl1', 'Eintracht Frankfurt', 'FRA', 'Frankfurt', 'frankfurt.png'), 
                (7, 'bl1', '1. FSV Mainz 05', 'MAI', 'Mainz', 'mainz.png'),
@@ -114,23 +114,23 @@ class mod_bulispielplanInstallerScript
 			   (17, 'bl2', 'Fortuna Düsseldorf', 'DÜS', 'Düsseldorf', 'duesseldorf.png'), 
                (18, 'bl2', 'FC St. Pauli', 'STP', 'St. Pauli', 'pauli.png'),
                (19, 'bl1', 'VfL Bochum', 'BOC', 'Bochum', 'bochum.png'), 
-               (20, 'bl1', 'SpVgg Greuther Fürth', 'FÜR', 'Fürth', 'fuerth.png'),
+               (20, 'bl2', 'SpVgg Greuther Fürth', 'FÜR', 'Fürth', 'fuerth.png'),
                (21, 'bl2', '1. FC Heidenheim 1846', 'HEI', 'Heidenheim', 'heidenheim.png'), 
                (22, 'bl2', '1. FC Nürnberg', 'NÜR', 'Nürnberg', 'nuernberg.png'), 
                (23, 'bl2', 'SV Darmstadt 98', 'DAR', 'Darmstadt', 'darmstadt.png'), 
                (24, 'bl2', 'SV Sandhausen', 'SAN', 'Sandhausen', 'sandhausen.png'),
                (25, 'bl1', '1. FC Union Berlin', 'BER', 'Berlin', 'berlin.png'),
-               (26, 'bl1', 'Arminia Bielefeld', 'BIE', 'Bielefeld', 'bielefeld.png'),
-      		   (27, 'bl2', 'Erzgebirge Aue', 'AUE', 'Aue', 'aue.png'),
-      		   (28, 'bl2', 'Holstein Kiel', 'KIE', 'Kiel', 'kiel.png'),
-      		   (29, 'bl2', 'Jahn Regensburg', 'REG', 'Regensburg', 'regensburg.png'),
-      		   (30, 'bl1', 'FC Bayern München', 'FCB', 'Bayern', 'bayern.png'),
-      		   (31, 'bl1', 'Bayer Leverkusen', 'LEV', 'Leverkusen', 'leverkusen.png'),
-               (32, 'bl2', 'SC Paderborn 07', 'PAD', 'Paderborn', 'paderborn.png'),
-			   (33, 'bl2', 'FC Hansa Rostock', 'ROS', 'Rostock', 'rostock.png'),
-			   (34, 'bl2', 'Karlsruher SC', 'KSC', 'Karlsruhe', 'karlsruhe.png'),
-			   (35, 'bl2', 'FC Ingolstadt 04', 'ING', 'Ingolstadt', 'ingolstadt.png'), 
-			   (36, 'bl2', 'SG Dynamo Dresden', 'DRE', 'Dresden', 'dresden.png');
+               (26, 'bl2', 'Arminia Bielefeld', 'BIE', 'Bielefeld', 'bielefeld.png'),
+      		   (27, 'bl2', 'Holstein Kiel', 'KIE', 'Kiel', 'kiel.png'),
+      		   (28, 'bl2', 'Jahn Regensburg', 'REG', 'Regensburg', 'regensburg.png'),
+      		   (29, 'bl1', 'FC Bayern München', 'FCB', 'Bayern', 'bayern.png'),
+      		   (30, 'bl1', 'Bayer Leverkusen', 'LEV', 'Leverkusen', 'leverkusen.png'),
+               (31, 'bl2', 'SC Paderborn 07', 'PAD', 'Paderborn', 'paderborn.png'),
+			   (32, 'bl2', 'FC Hansa Rostock', 'ROS', 'Rostock', 'rostock.png'),
+			   (33, 'bl2', 'Karlsruher SC', 'KSC', 'Karlsruhe', 'karlsruhe.png'),
+               (34, 'bl2', '1. FC Kaiserslautern', 'KLA', 'Lautern', 'lautern.png'),
+               (35, 'bl2', '1. FC Magdeburg', 'MAG', 'Magdeburg', 'magdeburg.png'),
+               (36, 'bl2', 'Eintracht Braunschweig', 'BRA', 'Braunschweig', 'braunschweig.png');
 			   ";
 
         $db->setQuery($query);

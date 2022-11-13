@@ -14,3 +14,4 @@
  * 1.13 - Neue Bezeichnungen für Bayern und Leverkusen, Cache-Datei löschen bei Update
  * 1.14 - Saison 2018/2019
  * 1.17 - Saison 2019/2020
+ * 1.20 - Saison 2022/2023
